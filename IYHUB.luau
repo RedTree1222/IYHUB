@@ -364,9 +364,9 @@ Title.Text = "IYHUB v67.319"
 
 do
 	local emoji = ({
-		["01 01"] = "ðŸŽ†",
-		["02 14"] = "ðŸ’",
-		["03 17"] = "â˜˜ï¸",
+		["01 01"] = "Ã°Å¸Å½â€ ",
+		["02 14"] = "Ã°Å¸â€™Â",
+		["03 17"] = "Ã¢ËœËœÃ¯Â¸Â",
 		[(function(Year)
 			local A = math.floor(Year/100)
 			local B = math.floor((13+8*A)/25)
@@ -383,9 +383,9 @@ do
 				return ("04 %02d"):format(G-31)
 			end
 			return ("03 %02d"):format(G)
-		end)(tonumber(os.date"%Y"))] = "ðŸ¥š",
-		["10 31"] = "ðŸŽƒ",
-		["12 25"] = "ðŸŽ„"
+		end)(tonumber(os.date"%Y"))] = "Ã°Å¸Â¥Å¡",
+		["10 31"] = "Ã°Å¸Å½Æ’",
+		["12 25"] = "Ã°Å¸Å½â€ž"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -4469,6 +4469,8 @@ CMDs[#CMDs + 1] = {NAME = '--- USEFUL ---', DESC = 'Useful commands'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'antiidle / antiafk', DESC = 'Prevents the game from kicking you for being idle/afk'}
 CMDs[#CMDs + 1] = {NAME = 'cobalt / cspy', DESC = 'Opens Cobalt to intercept incoming and outgoing network traffic'}
+CMDs[#CMDs + 1] = {NAME = 'rejoin / rj', DESC = 'Makes you rejoin the game'}
+CMDs[#CMDs + 1] = {NAME = 'serverhop / shop', DESC = 'Teleports you to a different server'}
 CMDs[#CMDs + 1] = {NAME = '--- OTHER ---', DESC = 'Other commands'}
 CMDs[#CMDs + 1] = {NAME = 'contenthub / ch', DESC = 'Loads Content Hub'}
 CMDs[#CMDs + 1] = {NAME = 'abysallhub / abysall / ah', DESC = 'Loads Abysall Hub'}
@@ -6098,6 +6100,36 @@ addcmd("cobalt", {"cspy"}, function(args, speaker)
     loadstring(game:HttpGet("https://github.com/notpoiu/cobalt/releases/latest/download/Cobalt.luau"))()
 end)
 
+addcmd("rejoin", {"rj"}, function(args, speaker)
+	if #Players:GetPlayers() <= 1 then
+		Players.LocalPlayer:Kick("\nRejoining...")
+		wait()
+		TeleportService:Teleport(PlaceId, Players.LocalPlayer)
+	else
+		TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
+	end
+end)
+
+addcmd("serverhop", {"shop"}, function(args, speaker)
+	-- thanks to Amity for fixing
+	local servers = {}
+	local req = game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true")
+	local body = HttpService:JSONDecode(req)
+
+	if body and body.data then
+		for i, v in next, body.data do
+			if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+				table.insert(servers, 1, v.id)
+			end
+		end
+	end
+
+	if #servers > 0 then
+		TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
+	else
+		return notify("Serverhop", "Couldn't find a server.")
+	end
+end)
 addcmd('contenthub',{'ch'},function(args, speaker)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/RedTree1222/Content/refs/heads/main/ContentHub.luau"))()
 end)
