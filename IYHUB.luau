@@ -4483,6 +4483,20 @@ CMDs[#CMDs + 1] = {NAME = 'antifling', DESC = 'Toggles anti fling'}
 CMDs[#CMDs + 1] = {NAME = 'antivoid', DESC = 'Toggles anti void platform'}
 CMDs[#CMDs + 1] = {NAME = 'climb', DESC = 'Lets you climb walls'}
 CMDs[#CMDs + 1] = {NAME = 'unclimb', DESC = 'Disables climbing'}
+CMDs[#CMDs + 1] = {NAME = 'airclimb', DESC = 'Spawns an invisible truss in front of you to climb'}
+CMDs[#CMDs + 1] = {NAME = 'unairclimb', DESC = 'Disables air climbing'}
+CMDs[#CMDs + 1] = {NAME = 'airclimb2', DESC = 'Lets you climb freely through the air (velocity based)'}
+CMDs[#CMDs + 1] = {NAME = 'unairclimb2', DESC = 'Disables airclimb2'}
+CMDs[#CMDs + 1] = {NAME = 'bhop [baseSpeed] [speedCap] [jumpPower]', DESC = 'CS:GO style momentum bunny hop'}
+CMDs[#CMDs + 1] = {NAME = 'unbhop', DESC = 'Disables bhop'}
+CMDs[#CMDs + 1] = {NAME = 'goto [player]', DESC = 'Teleports to a player'}
+CMDs[#CMDs + 1] = {NAME = 'infjump', DESC = 'Allows you to jump infinitely'}
+CMDs[#CMDs + 1] = {NAME = 'uninfjump', DESC = 'Disables infjump'}
+CMDs[#CMDs + 1] = {NAME = 'spin [speed]', DESC = 'Spins your character'}
+CMDs[#CMDs + 1] = {NAME = 'unspin', DESC = 'Stops spinning'}
+CMDs[#CMDs + 1] = {NAME = 'wallclimb', DESC = 'Walk on walls'}
+CMDs[#CMDs + 1] = {NAME = 'telekinesis / tk', DESC = 'Gives you a telekinesis tool'}
+CMDs[#CMDs + 1] = {NAME = 'untelekinesis / untk', DESC = 'Removes telekinesis tool'}
 
 -- wait()
 
@@ -6082,6 +6096,15 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 addcmd("uniyhub", {"unexecute", "destroy"}, function(args, speaker)
+	execCmd("unfling")
+	execCmd("untouchfling")
+	execCmd("unflingtp")
+	execCmd("unclimb")
+	execCmd("unairclimb")
+	execCmd("unairclimb2")
+	execCmd("unbhop")
+	execCmd("untelekinesis")
+
 	if PARENT then PARENT:Destroy() end
 	getgenv().IY_LOADED = false
 	KeepInfYield = false
@@ -6383,8 +6406,142 @@ addcmd("unclimb", {}, function(args, speaker)
 	notify("Climb", "Disabled")
 end)
 
+local airClimb2Enabled = false
+local airClimb2Conn = nil
+
+addcmd("airclimb2", {}, function(args, speaker)
+	airClimb2Enabled = true
+	notify("Air Climb 2", "Enabled - hold Space/Jump to climb")
+	airClimb2Conn = RunService.Heartbeat:Connect(function()
+		if not airClimb2Enabled then return end
+		local character = speaker.Character
+		if not character then return end
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not hrp or not humanoid then return end
+		if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+			humanoid:ChangeState(Enum.HumanoidStateType.Climbing)
+			local bv = hrp:FindFirstChild("__AirClimbVelocity")
+			if not bv then
+				bv = Instance.new("BodyVelocity")
+				bv.Name = "__AirClimbVelocity"
+				bv.MaxForce = Vector3.new(0, math.huge, 0)
+				bv.P = 1e4
+				bv.Parent = hrp
+			end
+			bv.Velocity = Vector3.new(0, 20, 0)
+		else
+			local bv = hrp:FindFirstChild("__AirClimbVelocity")
+			if bv then bv:Destroy() end
+		end
+	end)
+end)
+
+addcmd("unairclimb2", {}, function(args, speaker)
+	airClimb2Enabled = false
+	if airClimb2Conn then airClimb2Conn:Disconnect() airClimb2Conn = nil end
+	local character = speaker.Character
+	if character then
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if hrp then
+			local bv = hrp:FindFirstChild("__AirClimbVelocity")
+			if bv then bv:Destroy() end
+		end
+	end
+	notify("Air Climb 2", "Disabled")
+end)
+
+local airClimbTruss = nil
+local airClimbTrussConn = nil
+
+addcmd("airclimb", {}, function(args, speaker)
+	if airClimbTruss then return notify("Air Climb", "Already enabled") end
+	
+	airClimbTruss = Instance.new("TrussPart")
+	airClimbTruss.Size = Vector3.new(2, 2048, 2)
+	airClimbTruss.Transparency = 1
+	airClimbTruss.Anchored = true
+	airClimbTruss.CanCollide = true
+	airClimbTruss.Parent = Workspace
+
+	airClimbTrussConn = RunService.Heartbeat:Connect(function()
+		local character = speaker.Character
+		if not character then return end
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not hrp or not humanoid then return end
+		
+		if humanoid:GetState() ~= Enum.HumanoidStateType.Climbing then
+			local flatLook = Vector3.new(hrp.CFrame.LookVector.X, 0, hrp.CFrame.LookVector.Z)
+			if flatLook.Magnitude > 0 then flatLook = flatLook.Unit else flatLook = Vector3.new(0,0,-1) end
+			airClimbTruss.Position = Vector3.new(hrp.Position.X, hrp.Position.Y, hrp.Position.Z) + (flatLook * 1.5)
+		end
+	end)
+	
+	notify("Air Climb", "Enabled - use W/S to climb invisible truss")
+end)
+
+addcmd("unairclimb", {}, function(args, speaker)
+	if airClimbTrussConn then
+		airClimbTrussConn:Disconnect()
+		airClimbTrussConn = nil
+	end
+	if airClimbTruss then
+		airClimbTruss:Destroy()
+		airClimbTruss = nil
+	end
+	notify("Air Climb", "Disabled")
+end)
+
+local bhopEnabled = false
+local bhopConn = nil
+
+addcmd("bhop", {}, function(args, speaker)
+	bhopEnabled = true
+	local speed = tonumber(args[1]) or 50
+	local height = tonumber(args[2]) or 50
+	notify("Bhop", "Enabled - Hold Space")
+	
+	if bhopConn then bhopConn:Disconnect() end
+	bhopConn = RunService.Heartbeat:Connect(function()
+		if not bhopEnabled then return end
+		local character = speaker.Character
+		if not character then return end
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if not humanoid or not hrp then return end
+
+		if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+			humanoid.JumpPower = height
+			humanoid.UseJumpPower = true
+			if humanoid:GetState() ~= Enum.HumanoidStateType.Jumping and humanoid:GetState() ~= Enum.HumanoidStateType.Freefall then
+				humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+				local moveDir = humanoid.MoveDirection
+				if moveDir.Magnitude > 0 then
+					hrp.Velocity = Vector3.new(moveDir.X * speed, hrp.Velocity.Y, moveDir.Z * speed)
+				end
+			end
+		end
+	end)
+end)
+
+addcmd("unbhop", {}, function(args, speaker)
+	bhopEnabled = false
+	if bhopConn then
+		bhopConn:Disconnect()
+		bhopConn = nil
+	end
+	local character = speaker.Character
+	if character then
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if humanoid then
+			humanoid.JumpPower = 50
+		end
+	end
+	notify("Bhop", "Disabled")
+end)
+
 addcmd("adonisbypass", {"adonis"}, function(args, speaker)
-	notify("Adonis Bypass", "Adonis Bypass made by bocaj111004")
 	local AdonisFunctions = {}
 	local Found = false
 	for Index, Data in pairs(getgc(true)) do
@@ -6410,12 +6567,329 @@ addcmd("adonisbypass", {"adonis"}, function(args, speaker)
 		end
 	end)
 	if Found then
-		notify("Adonis Bypass", "Success")
+		notify("Adonis Bypass", "Made by bocaj111004 | Success")
 	else
-		notify("Adonis Bypass", "Not found")
+		notify("Adonis Bypass", "Made by bocaj111004 | Not found")
 	end
 end)
 
+addcmd("goto", {"to"}, function(args, speaker)
+    local character = speaker and speaker.Character
+    local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+    local players = getPlayer(args[1], speaker)
+    for _, v in pairs(players) do
+        if Players[v].Character ~= nil then
+            if humanoid and humanoid.SeatPart then
+                humanoid.Sit = false
+                task.wait(0.1)
+            end
+            getRoot(speaker.Character).CFrame = getRoot(Players[v].Character):GetPivot() + Vector3.new(3, 1, 0)
+        end
+    end
+end)
+
+local infJump
+local infJumpDebounce = false
+
+addcmd("infjump", {"infinitejump"}, function(args, speaker)
+	if infJump then infJump:Disconnect() end
+	infJumpDebounce = false
+	infJump = UserInputService.JumpRequest:Connect(function()
+		if not infJumpDebounce then
+			infJumpDebounce = true
+			speaker.Character:FindFirstChildWhichIsA("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+			wait()
+			infJumpDebounce = false
+		end
+	end)
+end)
+
+addcmd("uninfjump", {"uninfinitejump", "noinfjump", "noinfinitejump"}, function(args, speaker)
+	if infJump then infJump:Disconnect() end
+	infJumpDebounce = false
+end)
+
+addcmd("spin", {}, function(args, speaker)
+	local spinSpeed = 20
+	if args[1] and tonumber(args[1]) then
+		spinSpeed = tonumber(args[1])
+	end
+	for i,v in pairs(getRoot(speaker.Character):GetChildren()) do
+		if v.Name == "Spinning" then
+			v:Destroy()
+		end
+	end
+	local Spin = Instance.new("BodyAngularVelocity")
+	Spin.Name = "Spinning"
+	Spin.Parent = getRoot(speaker.Character)
+	Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+	Spin.AngularVelocity = Vector3.new(0,spinSpeed,0)
+end)
+
+addcmd("unspin", {}, function(args, speaker)
+	for i,v in pairs(getRoot(speaker.Character):GetChildren()) do
+		if v.Name == "Spinning" then
+			v:Destroy()
+		end
+	end
+end)
+
+addcmd("wallclimb", {"wallwalk", "walkonwalls"}, function(args, speaker)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/wallwalker.lua"))()
+end)
+
+addcmd("telekinesis", {"tk"}, function(args, speaker)
+	local function a(b, c)
+		local d = getfenv(c)
+		local e = setmetatable({}, {
+			__index = function(self, f)
+				if f == "script" then return b else return d[f] end
+			end
+		})
+		setfenv(c, e)
+		return c
+	end
+	
+	local g = {}
+	local h = Instance.new("Model", game:GetService("Lighting"))
+	local i = Instance.new("Tool")
+	local j = Instance.new("Part")
+	local k = Instance.new("Script")
+	local l = Instance.new("LocalScript")
+	
+	i.Name = "Telekinesis"
+	i.Parent = h
+	i.Grip = CFrame.new(0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+	i.GripForward = Vector3.new(-0, -1, -0)
+	i.GripRight = Vector3.new(0, 0, 1)
+	i.GripUp = Vector3.new(1, 0, 0)
+	
+	j.Name = "Handle"
+	j.Parent = i
+	j.CFrame = CFrame.new(-17.2635937, 15.4915619, 46, 0, 1, 0, 1, 0, 0, 0, 0, -1)
+	j.Orientation = Vector3.new(0, 180, 90)
+	j.Position = Vector3.new(-17.2635937, 15.4915619, 46)
+	j.Rotation = Vector3.new(-180, 0, -90)
+	j.Color = Color3.new(0.0666667, 0.0666667, 0.0666667)
+	j.Transparency = 1
+	j.Size = Vector3.new(1, 1.20000005, 1)
+	j.BottomSurface = Enum.SurfaceType.Weld
+	j.BrickColor = BrickColor.new("Really black")
+	j.Material = Enum.Material.Metal
+	j.TopSurface = Enum.SurfaceType.Smooth
+	
+	k.Name = "LineConnect"
+	k.Parent = i
+	table.insert(g, a(k, function()
+		wait()
+		local n = script.Part2
+		local o = script.Part1.Value
+		local p = script.Part2.Value
+		local q = script.Par.Value
+		local color = script.Color
+		local r = Instance.new("Part")
+		r.TopSurface = 0
+		r.BottomSurface = 0
+		r.Reflectance = .5
+		r.Name = "Laser"
+		r.Locked = true
+		r.CanCollide = false
+		r.Anchored = true
+		r.formFactor = 0
+		r.Size = Vector3.new(1, 1, 1)
+		local s = Instance.new("BlockMesh")
+		s.Parent = r
+		while true do
+			if n.Value == nil or o == nil or p == nil or q == nil then break end
+			if o.Parent == nil or p.Parent == nil or q.Parent == nil then break end
+			local t = CFrame.new(o.Position, p.Position)
+			local dist = (o.Position - p.Position).magnitude
+			r.Parent = q
+			r.BrickColor = color.Value.BrickColor
+			r.Reflectance = color.Value.Reflectance
+			r.Transparency = color.Value.Transparency
+			r.CFrame = CFrame.new(o.Position + t.lookVector * dist / 2, p.Position)
+			s.Scale = Vector3.new(.25, .25, dist)
+			wait()
+		end
+		r:remove()
+		script:remove()
+	end))
+	k.Disabled = true
+	
+	l.Name = "MainScript"
+	l.Parent = i
+	table.insert(g, a(l, function()
+		wait()
+		local tool = script.Parent
+		local lineconnect = tool.LineConnect
+		local object = nil
+		local mousedown = false
+		local BP = Instance.new("BodyPosition")
+		BP.maxForce = Vector3.new(math.huge, math.huge, math.huge)
+		BP.P = BP.P * 1.1
+		local dist = nil
+		local point = Instance.new("Part")
+		point.Locked = true
+		point.Anchored = true
+		point.formFactor = 0
+		point.Shape = 0
+		point.BrickColor = BrickColor.Black()
+		point.Size = Vector3.new(1, 1, 1)
+		point.CanCollide = false
+		local s = Instance.new("SpecialMesh")
+		s.MeshType = "Sphere"
+		s.Scale = Vector3.new(.7, .7, .7)
+		s.Parent = point
+		local front = tool.Handle
+		local color = tool.Handle
+		local objval = nil
+		
+		function LineConnect(o, p, q)
+			local w = Instance.new("ObjectValue")
+			w.Value = o
+			w.Name = "Part1"
+			local x = Instance.new("ObjectValue")
+			x.Value = p
+			x.Name = "Part2"
+			local y = Instance.new("ObjectValue")
+			y.Value = q
+			y.Name = "Par"
+			local z = Instance.new("ObjectValue")
+			z.Value = color
+			z.Name = "Color"
+			local A = lineconnect:clone()
+			A.Disabled = false
+			w.Parent = A
+			x.Parent = A
+			y.Parent = A
+			z.Parent = A
+			A.Parent = workspace
+			if p == object then objval = x end
+		end
+		
+		function onButton1Down(B)
+			if mousedown == true then return end
+			mousedown = true
+			coroutine.resume(coroutine.create(function()
+				local C = point:clone()
+				C.Parent = tool
+				LineConnect(front, C, workspace)
+				while mousedown == true do
+					C.Parent = tool
+					if object == nil then
+						if B.Target == nil then
+							local t = CFrame.new(front.Position, B.Hit.p)
+							C.CFrame = CFrame.new(front.Position + t.lookVector * 1000)
+						else
+							C.CFrame = CFrame.new(B.Hit.p)
+						end
+					else
+						LineConnect(front, object, workspace)
+						break
+					end
+					wait()
+				end
+				C:remove()
+			end))
+			
+			while mousedown == true do
+				if B.Target ~= nil then
+					local D = B.Target
+					if D.Anchored == false then
+						object = D
+						dist = (object.Position - front.Position).magnitude
+						break
+					end
+				end
+				wait()
+			end
+			while mousedown == true do
+				if object.Parent == nil then break end
+				local t = CFrame.new(front.Position, B.Hit.p)
+				BP.Parent = object
+				BP.position = front.Position + t.lookVector * dist
+				wait()
+			end
+			BP:remove()
+			object = nil
+			if objval then objval.Value = nil end
+		end
+		
+		function onKeyDown(E, B)
+			local E = E:lower()
+			if E == "q" then if dist and dist >= 5 then dist = dist - 10 end end
+			if E == "r" then
+				if object == nil then return end
+				for _, H in pairs(object:children()) do
+					if H.className == "BodyGyro" then return end
+				end
+				local BG = Instance.new("BodyGyro")
+				BG.maxTorque = Vector3.new(math.huge, math.huge, math.huge)
+				BG.cframe = CFrame.new(object.CFrame.p)
+				BG.Parent = object
+				repeat wait() until object.CFrame == CFrame.new(object.CFrame.p)
+				BG.Parent = nil
+				if object == nil then return end
+				for _, H in pairs(object:children()) do
+					if H.className == "BodyGyro" then H.Parent = nil end
+				end
+				object.Velocity = Vector3.new(0, 0, 0)
+				object.RotVelocity = Vector3.new(0, 0, 0)
+				object.Orientation = Vector3.new(0, 0, 0)
+			end
+			if E == "e" then if dist then dist = dist + 10 end end
+			if E == "t" then if dist and dist ~= 10 then dist = 10 end end
+			if E == "y" then if dist and dist ~= 200 then dist = 200 end end
+			if E == "=" then BP.P = BP.P * 1.5 end
+			if E == "-" then BP.P = BP.P * 0.5 end
+		end
+		
+		function onEquipped(B)
+			local human = tool.Parent:FindFirstChild("Humanoid")
+			if human then
+				human.Changed:connect(function()
+					if human.Health == 0 then
+						mousedown = false
+						BP:remove()
+						point:remove()
+						tool:remove()
+					end
+				end)
+			end
+			B.Button1Down:connect(function() onButton1Down(B) end)
+			B.Button1Up:connect(function() mousedown = false end)
+			B.KeyDown:connect(function(E) onKeyDown(E, B) end)
+			B.Icon = "rbxasset://textures\\GunCursor.png"
+		end
+		tool.Equipped:connect(onEquipped)
+	end))
+	
+	for J, H in pairs(h:GetChildren()) do
+		H.Parent = speaker:FindFirstChild("Backpack") or speaker.Character
+		pcall(function() H:MakeJoints() end)
+	end
+	h:Destroy()
+	for J, H in pairs(g) do
+		spawn(function() pcall(H) end)
+	end
+	notify("Telekinesis", "Added tool to your inventory!")
+end)
+
+addcmd("untelekinesis", {"untk"}, function(args, speaker)
+	local backpack = speaker:FindFirstChild("Backpack")
+	if backpack then
+		for _, tool in pairs(backpack:GetChildren()) do
+			if tool.Name == "Telekinesis" then tool:Destroy() end
+		end
+	end
+	if speaker.Character then
+		for _, tool in pairs(speaker.Character:GetChildren()) do
+			if tool.Name == "Telekinesis" then tool:Destroy() end
+		end
+	end
+	notify("Telekinesis", "Removed tool from inventory")
+end)
 
 
 if IsOnMobile then
