@@ -364,9 +364,9 @@ Title.Text = "IYHUB v67.319"
 
 do
 	local emoji = ({
-		["01 01"] = "Ã°Å¸Å½â€ ",
-		["02 14"] = "Ã°Å¸â€™Â",
-		["03 17"] = "Ã¢ËœËœÃ¯Â¸Â",
+		["01 01"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â ",
+		["02 14"] = "ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â",
+		["03 17"] = "ÃƒÂ¢Ã‹Å“Ã‹Å“ÃƒÂ¯Ã‚Â¸Ã‚Â",
 		[(function(Year)
 			local A = math.floor(Year/100)
 			local B = math.floor((13+8*A)/25)
@@ -383,9 +383,9 @@ do
 				return ("04 %02d"):format(G-31)
 			end
 			return ("03 %02d"):format(G)
-		end)(tonumber(os.date"%Y"))] = "Ã°Å¸Â¥Å¡",
-		["10 31"] = "Ã°Å¸Å½Æ’",
-		["12 25"] = "Ã°Å¸Å½â€ž"
+		end)(tonumber(os.date"%Y"))] = "ÃƒÂ°Ã…Â¸Ã‚Â¥Ã…Â¡",
+		["10 31"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã†â€™",
+		["12 25"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Å¾"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -4465,6 +4465,7 @@ function autoComplete(str,curText)
 end
 
 CMDs = {}
+CMDs[#CMDs + 1] = {NAME = 'uniyhub / unexecute / destroy', DESC = 'Unexecutes IYHUB completely'}
 CMDs[#CMDs + 1] = {NAME = '--- USEFUL ---', DESC = 'Useful commands'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'antiidle / antiafk', DESC = 'Prevents the game from kicking you for being idle/afk'}
@@ -6067,10 +6068,17 @@ local TeleportCheck = false
 Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if KeepInfYield and (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/RedTree1222/IYHUB/main/IYHUB.luau'))()")
 	end
 end)
 
+addcmd("uniyhub", {"unexecute", "destroy"}, function(args, speaker)
+	if PARENT then
+		PARENT:Destroy()
+	end
+	getgenv().IY_LOADED = false
+	KeepInfYield = false
+end)
 addcmd("explorer", {"dex"}, function(args, speaker)
 	notify("Loading", "Hold on a sec")
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
