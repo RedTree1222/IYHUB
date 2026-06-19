@@ -364,9 +364,9 @@ Title.Text = "IYHUB v67.319"
 
 do
 	local emoji = ({
-		["01 01"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â ",
-		["02 14"] = "ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â",
-		["03 17"] = "ÃƒÂ¢Ã‹Å“Ã‹Å“ÃƒÂ¯Ã‚Â¸Ã‚Â",
+		["01 01"] = "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸Ãƒâ€¦Ã‚Â½ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ",
+		["02 14"] = "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢Ãƒâ€šÃ‚Â",
+		["03 17"] = "ÃƒÆ’Ã‚Â¢Ãƒâ€¹Ã…â€œÃƒâ€¹Ã…â€œÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¸Ãƒâ€šÃ‚Â",
 		[(function(Year)
 			local A = math.floor(Year/100)
 			local B = math.floor((13+8*A)/25)
@@ -383,9 +383,9 @@ do
 				return ("04 %02d"):format(G-31)
 			end
 			return ("03 %02d"):format(G)
-		end)(tonumber(os.date"%Y"))] = "ÃƒÂ°Ã…Â¸Ã‚Â¥Ã…Â¡",
-		["10 31"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã†â€™",
-		["12 25"] = "ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Å¾"
+		end)(tonumber(os.date"%Y"))] = "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸Ãƒâ€šÃ‚Â¥Ãƒâ€¦Ã‚Â¡",
+		["10 31"] = "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸Ãƒâ€¦Ã‚Â½Ãƒâ€ Ã¢â‚¬â„¢",
+		["12 25"] = "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸Ãƒâ€¦Ã‚Â½ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -4475,6 +4475,8 @@ CMDs[#CMDs + 1] = {NAME = 'serverhop / shop', DESC = 'Teleports you to a differe
 CMDs[#CMDs + 1] = {NAME = '--- OTHER ---', DESC = 'Other commands'}
 CMDs[#CMDs + 1] = {NAME = 'contenthub / ch', DESC = 'Loads Content Hub'}
 CMDs[#CMDs + 1] = {NAME = 'abysallhub / abysall / ah', DESC = 'Loads Abysall Hub'}
+CMDs[#CMDs + 1] = {NAME = '--- FUN ---', DESC = 'Fun commands'}
+CMDs[#CMDs + 1] = {NAME = 'kick [message]', DESC = 'Kicks you from the game with a custom message'}
 -- wait()
 
 for i = 1, #CMDs do
@@ -6144,6 +6146,14 @@ end)
 
 addcmd('abysallhub',{'abysall','ah'},function(args, speaker)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/bocaj111004/Abysall/refs/heads/main/Loader.luau"))()
+end)
+
+addcmd("kick", {}, function(args, speaker)
+	local message = table.concat(args, " ")
+	if message == "" then
+		message = "You have been kicked."
+	end
+	speaker:Kick(message)
 end)
 
 if IsOnMobile then
