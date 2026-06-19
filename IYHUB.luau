@@ -1,9 +1,3 @@
--- THIS IS A MODIEFIED VERSION OF INFINITE YIELD MADE BY TRITEETH/REDTREE
--- YOU CAN FIND THE ACTUAL SCRIPT HERE
--- https://infyiff.github.io/
--- loadstring : loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
-
-
 if IY_LOADED and not _G.IY_DEBUG then
 	-- error("Infinite Yield is already running!", 0)
 	return
@@ -364,9 +358,9 @@ Title.Text = "IYHUB v67.319"
 
 do
 	local emoji = ({
-		["01 01"] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â ",
-		["02 14"] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â",
-		["03 17"] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¹ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¹ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â",
+		["01 01"] = "🎆",
+		["02 14"] = "💝",
+		["03 17"] = "☘️",
 		[(function(Year)
 			local A = math.floor(Year/100)
 			local B = math.floor((13+8*A)/25)
@@ -383,9 +377,9 @@ do
 				return ("04 %02d"):format(G-31)
 			end
 			return ("03 %02d"):format(G)
-		end)(tonumber(os.date"%Y"))] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¥ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡",
-		["10 31"] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢",
-		["12 25"] = "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾"
+		end)(tonumber(os.date"%Y"))] = "🥚",
+		["10 31"] = "🎃",
+		["12 25"] = "🎄"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -4466,28 +4460,30 @@ end
 
 CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'uniyhub / unexecute / destroy', DESC = 'Unexecutes IYHUB completely'}
-CMDs[#CMDs + 1] = {NAME = '--- USEFUL ---', DESC = 'Useful commands'}
-CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
-CMDs[#CMDs + 1] = {NAME = 'antiidle / antiafk', DESC = 'Prevents the game from kicking you for being idle/afk'}
-CMDs[#CMDs + 1] = {NAME = 'cobalt / cspy', DESC = 'Opens Cobalt to intercept incoming and outgoing network traffic'}
-CMDs[#CMDs + 1] = {NAME = 'rejoin / rj', DESC = 'Makes you rejoin the game'}
-CMDs[#CMDs + 1] = {NAME = 'serverhop / shop', DESC = 'Teleports you to a different server'}
+CMDs[#CMDs + 1] = {NAME = '--- USEFUL ---', DESC = ''}
+CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX'}
+CMDs[#CMDs + 1] = {NAME = 'antiidle / antiafk', DESC = 'Prevents idle kick'}
+CMDs[#CMDs + 1] = {NAME = 'cobalt / cspy', DESC = 'Opens Cobalt network spy'}
+CMDs[#CMDs + 1] = {NAME = 'rejoin / rj', DESC = 'Rejoins the game'}
+CMDs[#CMDs + 1] = {NAME = 'serverhop / shop', DESC = 'Hops to a different server'}
 CMDs[#CMDs + 1] = {NAME = 'ketamine', DESC = 'Loads Ketamine'}
-CMDs[#CMDs + 1] = {NAME = '--- OTHER ---', DESC = 'Other commands'}
+CMDs[#CMDs + 1] = {NAME = 'adonisbypass / adonis', DESC = 'Bypasses Adonis admin'}
+CMDs[#CMDs + 1] = {NAME = '--- OTHER ---', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'contenthub / ch', DESC = 'Loads Content Hub'}
 CMDs[#CMDs + 1] = {NAME = 'abysallhub / abysall / ah', DESC = 'Loads Abysall Hub'}
-CMDs[#CMDs + 1] = {NAME = '--- FUN ---', DESC = 'Fun commands'}
-CMDs[#CMDs + 1] = {NAME = 'kick [message]', DESC = 'Kicks you from the game with a custom message'}
+CMDs[#CMDs + 1] = {NAME = '--- FUN ---', DESC = ''}
+CMDs[#CMDs + 1] = {NAME = 'kick [message]', DESC = 'Client kicks you with a message'}
 CMDs[#CMDs + 1] = {NAME = 'fling', DESC = 'Flings anyone you touch'}
-CMDs[#CMDs + 1] = {NAME = 'unfling / nofling', DESC = 'Disables the fling command'}
-CMDs[#CMDs + 1] = {NAME = 'touchfling / tf', DESC = 'Rapid velocity based touch fling'}
+CMDs[#CMDs + 1] = {NAME = 'unfling / nofling', DESC = 'Disables fling'}
+CMDs[#CMDs + 1] = {NAME = 'touchfling / tf', DESC = 'Velocity based touch fling'}
 CMDs[#CMDs + 1] = {NAME = 'untouchfling / untf', DESC = 'Disables touch fling'}
-CMDs[#CMDs + 1] = {NAME = 'flingtp [user] [power]', DESC = 'Teleport fling a player'}
-CMDs[#CMDs + 1] = {NAME = 'unflingtp', DESC = 'Stop teleport fling'}
-CMDs[#CMDs + 1] = {NAME = 'antifling', DESC = 'Enable Anti Fling (disable collisions)'}
-CMDs[#CMDs + 1] = {NAME = 'antivoid', DESC = 'Creates an Anti Void platform'}
-CMDs[#CMDs + 1] = {NAME = 'climb', DESC = 'Lets you climb any wall or surface'}
+CMDs[#CMDs + 1] = {NAME = 'flingtp [user] [power]', DESC = 'Teleport flings a player'}
+CMDs[#CMDs + 1] = {NAME = 'unflingtp', DESC = 'Stops flingtp'}
+CMDs[#CMDs + 1] = {NAME = 'antifling', DESC = 'Toggles anti fling'}
+CMDs[#CMDs + 1] = {NAME = 'antivoid', DESC = 'Toggles anti void platform'}
+CMDs[#CMDs + 1] = {NAME = 'climb', DESC = 'Lets you climb walls'}
 CMDs[#CMDs + 1] = {NAME = 'unclimb', DESC = 'Disables climbing'}
+
 -- wait()
 
 for i = 1, #CMDs do
@@ -6086,12 +6082,11 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 addcmd("uniyhub", {"unexecute", "destroy"}, function(args, speaker)
-	if PARENT then
-		PARENT:Destroy()
-	end
+	if PARENT then PARENT:Destroy() end
 	getgenv().IY_LOADED = false
 	KeepInfYield = false
 end)
+
 addcmd("explorer", {"dex"}, function(args, speaker)
 	notify("Loading", "Hold on a sec")
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
@@ -6100,11 +6095,8 @@ end)
 addcmd("antiafk", {"antiidle"}, function(args, speaker)
 	if getconnections then
 		for _, connection in pairs(getconnections(speaker.Idled)) do
-			if connection["Disable"] then
-				connection["Disable"](connection)
-			elseif connection["Disconnect"] then
-				connection["Disconnect"](connection)
-			end
+			if connection["Disable"] then connection["Disable"](connection)
+			elseif connection["Disconnect"] then connection["Disconnect"](connection) end
 		end
 	else
 		speaker.Idled:Connect(function()
@@ -6116,9 +6108,8 @@ addcmd("antiafk", {"antiidle"}, function(args, speaker)
 end)
 
 addcmd("cobalt", {"cspy"}, function(args, speaker)
-    notify("Loading", "Hold on a sec")
-    -- Full credit to notpoiu, creator of Cobalt
-    loadstring(game:HttpGet("https://github.com/notpoiu/cobalt/releases/latest/download/Cobalt.luau"))()
+	notify("Loading", "Hold on a sec")
+	loadstring(game:HttpGet("https://github.com/notpoiu/cobalt/releases/latest/download/Cobalt.luau"))()
 end)
 
 addcmd("rejoin", {"rj"}, function(args, speaker)
@@ -6132,11 +6123,9 @@ addcmd("rejoin", {"rj"}, function(args, speaker)
 end)
 
 addcmd("serverhop", {"shop"}, function(args, speaker)
-	-- thanks to Amity for fixing
 	local servers = {}
 	local req = game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true")
 	local body = HttpService:JSONDecode(req)
-
 	if body and body.data then
 		for i, v in next, body.data do
 			if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
@@ -6144,28 +6133,290 @@ addcmd("serverhop", {"shop"}, function(args, speaker)
 			end
 		end
 	end
-
 	if #servers > 0 then
 		TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
 	else
 		return notify("Serverhop", "Couldn't find a server.")
 	end
 end)
-addcmd('contenthub',{'ch'},function(args, speaker)
+
+addcmd("ketamine", {}, function(args, speaker)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Ketamine/refs/heads/main/Ketamine.lua"))()
+end)
+
+addcmd("contenthub", {"ch"}, function(args, speaker)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/RedTree1222/Content/refs/heads/main/ContentHub.luau"))()
 end)
 
-addcmd('abysallhub',{'abysall','ah'},function(args, speaker)
+addcmd("abysallhub", {"abysall", "ah"}, function(args, speaker)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/bocaj111004/Abysall/refs/heads/main/Loader.luau"))()
 end)
 
 addcmd("kick", {}, function(args, speaker)
 	local message = table.concat(args, " ")
-	if message == "" then
-		message = "You have been kicked."
-	end
+	if message == "" then message = "You have been kicked." end
 	speaker:Kick(message)
 end)
+
+addcmd("fling", {}, function(args, speaker)
+	flinging = false
+	for _, child in pairs(speaker.Character:GetDescendants()) do
+		if child:IsA("BasePart") then child.CustomPhysicalProperties = PhysicalProperties.new(100, 0.3, 0.5) end
+	end
+	execCmd("noclip")
+	wait(.1)
+	local bambam = Instance.new("BodyAngularVelocity")
+	bambam.Name = randomString()
+	bambam.Parent = getRoot(speaker.Character)
+	bambam.AngularVelocity = Vector3.new(0, 99999, 0)
+	bambam.MaxTorque = Vector3.new(0, math.huge, 0)
+	bambam.P = math.huge
+	for i, v in next, speaker.Character:GetChildren() do
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+			v.Massless = true
+			v.Velocity = Vector3.new(0, 0, 0)
+		end
+	end
+	flinging = true
+	flingDied = speaker.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+		execCmd("unfling")
+	end)
+	repeat
+		bambam.AngularVelocity = Vector3.new(0, 99999, 0)
+		wait(.2)
+		bambam.AngularVelocity = Vector3.new(0, 0, 0)
+		wait(.1)
+	until flinging == false
+end)
+
+addcmd("unfling", {"nofling"}, function(args, speaker)
+	execCmd("clip")
+	if flingDied then flingDied:Disconnect() end
+	flinging = false
+	wait(.1)
+	local speakerChar = speaker.Character
+	if not speakerChar or not getRoot(speakerChar) then return end
+	for i, v in pairs(getRoot(speakerChar):GetChildren()) do
+		if v.ClassName == "BodyAngularVelocity" then v:Destroy() end
+	end
+	for _, child in pairs(speakerChar:GetDescendants()) do
+		if child.ClassName == "Part" or child.ClassName == "MeshPart" then
+			child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+		end
+	end
+end)
+
+local hiddenfling = false
+addcmd("touchfling", {"tf"}, function(args, speaker)
+	hiddenfling = true
+	notify("Touch Fling", "Enabled")
+	local lp = Players.LocalPlayer
+	local movel = 0.1
+	coroutine.wrap(function()
+		while hiddenfling do
+			RunService.Heartbeat:Wait()
+			local c = lp.Character
+			local hrp = c and c:FindFirstChild("HumanoidRootPart")
+			if hrp then
+				local vel = hrp.Velocity
+				hrp.Velocity = vel * 10000 + Vector3.new(0, 10000, 0)
+				RunService.RenderStepped:Wait()
+				hrp.Velocity = vel
+				RunService.Stepped:Wait()
+				hrp.Velocity = vel + Vector3.new(0, movel, 0)
+				movel = -movel
+			end
+		end
+	end)()
+end)
+
+addcmd("untouchfling", {"untf"}, function(args, speaker)
+	hiddenfling = false
+	notify("Touch Fling", "Disabled")
+end)
+
+local isFlingtping = false
+local flingtpOrigCamSubject
+local flingtpOrigPos
+
+addcmd("flingtp", {}, function(args, speaker)
+	local players = getPlayer(args[1], speaker)
+	if not players or not players[1] then return notify("FlingTP", "Player not found") end
+	local targetPlayer = Players:FindFirstChild(players[1])
+	if not targetPlayer then return end
+	local flingPower = tonumber(args[2]) or 9999
+	isFlingtping = true
+	coroutine.wrap(function()
+		local character = speaker.Character
+		local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+		if not humanoidRootPart then return end
+		flingtpOrigCamSubject = Workspace.CurrentCamera.CameraSubject
+		flingtpOrigPos = humanoidRootPart.CFrame
+		Workspace.CurrentCamera.CameraSubject = targetPlayer.Character and targetPlayer.Character:FindFirstChildOfClass("Humanoid")
+		while isFlingtping and targetPlayer and targetPlayer.Character do
+			character = speaker.Character
+			humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+			local targetHRP = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+			if targetHRP and humanoidRootPart then
+				humanoidRootPart.CFrame = CFrame.new(targetHRP.Position + Vector3.new(math.random(-1,1), 0, math.random(-1,1)))
+				humanoidRootPart.Velocity = Vector3.new(flingPower, flingPower, flingPower)
+				humanoidRootPart.RotVelocity = Vector3.new(flingPower, flingPower, flingPower)
+			end
+			RunService.Heartbeat:Wait()
+		end
+		Workspace.CurrentCamera.CameraSubject = flingtpOrigCamSubject
+		local hrp = speaker.Character and speaker.Character:FindFirstChild("HumanoidRootPart")
+		if hrp and flingtpOrigPos then
+			hrp.CFrame = flingtpOrigPos
+			hrp.Velocity = Vector3.new(0, 0, 0)
+			hrp.RotVelocity = Vector3.new(0, 0, 0)
+		end
+	end)()
+end)
+
+addcmd("unflingtp", {}, function(args, speaker)
+	isFlingtping = false
+end)
+
+local isAntiFlingEnabled = false
+local antiFlingConn = nil
+
+addcmd("antifling", {}, function(args, speaker)
+	isAntiFlingEnabled = not isAntiFlingEnabled
+	if isAntiFlingEnabled then
+		notify("Anti Fling", "Enabled")
+		antiFlingConn = RunService.Heartbeat:Connect(function()
+			local character = speaker.Character
+			if not character then return end
+			for _, part in pairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then part.CanCollide = false end
+			end
+		end)
+	else
+		notify("Anti Fling", "Disabled")
+		if antiFlingConn then antiFlingConn:Disconnect() antiFlingConn = nil end
+		local character = speaker.Character
+		if character then
+			for _, part in pairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then part.CanCollide = true end
+			end
+		end
+	end
+end)
+
+local antiVoidPart = nil
+
+addcmd("antivoid", {}, function(args, speaker)
+	if antiVoidPart then
+		antiVoidPart:Destroy()
+		antiVoidPart = nil
+		notify("Anti Void", "Disabled")
+	else
+		antiVoidPart = Instance.new("Part")
+		antiVoidPart.Name = "AntiVoidPart"
+		antiVoidPart.Size = Vector3.new(2048, 1, 2048)
+		antiVoidPart.Anchored = true
+		antiVoidPart.Transparency = 0.5
+		antiVoidPart.CanCollide = true
+		antiVoidPart.BrickColor = BrickColor.new("Really blue")
+		local lowestY = math.huge
+		for _, part in pairs(Workspace:GetDescendants()) do
+			if part:IsA("BasePart") then lowestY = math.min(lowestY, part.Position.Y) end
+		end
+		antiVoidPart.Position = Vector3.new(0, lowestY - 5, 0)
+		antiVoidPart.Parent = Workspace
+		notify("Anti Void", "Enabled")
+	end
+end)
+
+local climbEnabled = false
+local climbConnection = nil
+
+addcmd("climb", {}, function(args, speaker)
+	climbEnabled = true
+	notify("Climb", "Enabled - walk into walls to climb")
+	climbConnection = RunService.Heartbeat:Connect(function()
+		if not climbEnabled then return end
+		local character = speaker.Character
+		if not character then return end
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not hrp or not humanoid then return end
+		local directions = {hrp.CFrame.LookVector, -hrp.CFrame.LookVector, hrp.CFrame.RightVector, -hrp.CFrame.RightVector}
+		local params = RaycastParams.new()
+		params.FilterDescendantsInstances = {character}
+		params.FilterType = Enum.RaycastFilterType.Exclude
+		local onWall = false
+		for _, dir in ipairs(directions) do
+			if Workspace:Raycast(hrp.Position, dir * 3.5, params) then onWall = true break end
+		end
+		if onWall then
+			humanoid:ChangeState(Enum.HumanoidStateType.Climbing)
+			local bv = hrp:FindFirstChild("__ClimbVelocity")
+			if not bv then
+				bv = Instance.new("BodyVelocity")
+				bv.Name = "__ClimbVelocity"
+				bv.MaxForce = Vector3.new(0, math.huge, 0)
+				bv.P = 1e4
+				bv.Parent = hrp
+			end
+			bv.Velocity = Vector3.new(0, 16, 0)
+		else
+			local bv = hrp:FindFirstChild("__ClimbVelocity")
+			if bv then bv:Destroy() end
+		end
+	end)
+end)
+
+addcmd("unclimb", {}, function(args, speaker)
+	climbEnabled = false
+	if climbConnection then climbConnection:Disconnect() climbConnection = nil end
+	local character = speaker.Character
+	if character then
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if hrp then
+			local bv = hrp:FindFirstChild("__ClimbVelocity")
+			if bv then bv:Destroy() end
+		end
+	end
+	notify("Climb", "Disabled")
+end)
+
+addcmd("adonisbypass", {"adonis"}, function(args, speaker)
+	notify("Adonis Bypass", "Adonis Bypass made by bocaj111004")
+	local AdonisFunctions = {}
+	local Found = false
+	for Index, Data in pairs(getgc(true)) do
+		if typeof(Data) == "table" and rawget(Data, "Detected") or typeof(Data) == "table" and rawget(Data, "RLocked") then
+			for Index, Function in pairs(Data) do
+				if typeof(Function) == "function" then
+					table.insert(AdonisFunctions, Function)
+					Found = true
+					hookfunction(Function, function(action, info, nocrash)
+						return task.wait(9e9)
+					end)
+				end
+			end
+		end
+	end
+	local OldDebug
+	OldDebug = hookfunction(debug.info, function(...)
+		local Args = {...}
+		if table.find(AdonisFunctions, Args[1]) then
+			return task.wait(9e9)
+		else
+			return OldDebug(...)
+		end
+	end)
+	if Found then
+		notify("Adonis Bypass", "Success")
+	else
+		notify("Adonis Bypass", "Not found")
+	end
+end)
+
+
 
 if IsOnMobile then
 	local QuickCapture = Instance.new("TextButton")
