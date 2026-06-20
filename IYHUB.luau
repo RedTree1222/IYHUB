@@ -1,3 +1,8 @@
+-- THIS IS A MODIFIED VERSION OF INFINITE YIELD MADE BY TRITEETH/REDTREE
+-- YOU CAN FIND THE ACTUAL SCRIPT HERE
+-- https://infyiff.github.io/
+-- loadstring : loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+
 if IY_LOADED and not _G.IY_DEBUG then
 	-- error("Infinite Yield is already running!", 0)
 	return
