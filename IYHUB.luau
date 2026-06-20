@@ -4497,6 +4497,12 @@ CMDs[#CMDs + 1] = {NAME = 'unspin', DESC = 'Stops spinning'}
 CMDs[#CMDs + 1] = {NAME = 'wallclimb', DESC = 'Walk on walls'}
 CMDs[#CMDs + 1] = {NAME = 'telekinesis / tk', DESC = 'Gives you a telekinesis tool'}
 CMDs[#CMDs + 1] = {NAME = 'untelekinesis / untk', DESC = 'Removes telekinesis tool'}
+CMDs[#CMDs + 1] = {NAME = 'ws [speed]', DESC = 'Change your walkspeed (default 16)'}
+CMDs[#CMDs + 1] = {NAME = 'jp [power]', DESC = 'Change your jump power/height (default 50)'}
+CMDs[#CMDs + 1] = {NAME = 'noclip', DESC = 'Enables noclip (no collision)'}
+CMDs[#CMDs + 1] = {NAME = 'clip / unnoclip', DESC = 'Disables noclip'}
+CMDs[#CMDs + 1] = {NAME = 'fly [speed]', DESC = 'Enables fly mode'}
+CMDs[#CMDs + 1] = {NAME = 'unfly / nofly', DESC = 'Disables fly'}
 
 -- wait()
 
@@ -6104,6 +6110,8 @@ addcmd("uniyhub", {"unexecute", "destroy"}, function(args, speaker)
 	execCmd("unairclimb2")
 	execCmd("unbhop")
 	execCmd("untelekinesis")
+	execCmd("clip")
+	execCmd("unfly")
 
 	if PARENT then PARENT:Destroy() end
 	getgenv().IY_LOADED = false
@@ -6889,6 +6897,66 @@ addcmd("untelekinesis", {"untk"}, function(args, speaker)
 		end
 	end
 	notify("Telekinesis", "Removed tool from inventory")
+end)
+
+addcmd('ws', {'speed', 'walkspeed'}, function(args, speaker)
+	local speed = args[1] or 16
+	if isNumber(speed) then
+		speaker.Character:FindFirstChildOfClass('Humanoid').WalkSpeed = speed
+	end
+end)
+
+addcmd('jp', {'jpower', 'jumppower'}, function(args, speaker)
+	local jpower = args[1] or 50
+	if isNumber(jpower) then
+		local hum = speaker.Character:FindFirstChildOfClass('Humanoid')
+		if hum.UseJumpPower then
+			hum.JumpPower = jpower
+		else
+			hum.JumpHeight = jpower
+		end
+	end
+end)
+
+addcmd('noclip', {}, function(args, speaker)
+	Clip = false
+	wait(0.1)
+	local function NoclipLoop()
+		if Clip == false and speaker.Character ~= nil then
+			for _, child in pairs(speaker.Character:GetDescendants()) do
+				if child:IsA('BasePart') and child.CanCollide == true then
+					child.CanCollide = false
+				end
+			end
+		end
+	end
+	Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	notify('Noclip', 'Noclip Enabled')
+end)
+
+addcmd('clip', {'unnoclip'}, function(args, speaker)
+	if Noclipping then
+		Noclipping:Disconnect()
+	end
+	Clip = true
+	notify('Noclip', 'Noclip Disabled')
+end)
+
+addcmd('fly', {}, function(args, speaker)
+	if not IsOnMobile then
+		NOFLY()
+		wait()
+		sFLY()
+	else
+		mobilefly(speaker)
+	end
+	if args[1] and isNumber(args[1]) then
+		iyflyspeed = args[1]
+	end
+end)
+
+addcmd('unfly', {'nofly'}, function(args, speaker)
+	if not IsOnMobile then NOFLY() else unmobilefly(speaker) end
 end)
 
 
